@@ -3,7 +3,7 @@ export default {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
     if (request.method === "GET" && url.pathname === "/templates") return Response.json(templates);
-    if (request.method === "GET") return Response.json({ service: "Agent Builder Core", routes: ["GET /templates", "POST /validate", "POST /run"], example: { spec: blankSpec, input: "hello" } });
+    if (request.method === "GET" && url.pathname === "/") return Response.json({ service: "Agent Builder Core", routes: ["GET /templates", "POST /validate", "POST /run"], example: { spec: blankSpec, input: "hello" } });
     if (request.method !== "POST" || !["/validate", "/run"].includes(url.pathname)) return new Response("Not found", { status: 404 });
     if (Number(request.headers.get("content-length")) > 100000) return new Response("Payload too large", { status: 413 });
     const reader = request.body?.getReader();
